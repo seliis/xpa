@@ -40,7 +40,7 @@ class FrameDrawer extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
         ),
         onPressed: () {
-          ref.read(screenProvider.notifier).state = screenPage;
+          ref.watch(screenProvider.notifier).state = screenPage;
           Navigator.pop(context);
         },
         child: Text(
