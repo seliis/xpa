@@ -2,7 +2,20 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
 class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  const FrameAppBar({super.key});
+  FrameAppBar({super.key});
+
+  final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+    shape: const RoundedRectangleBorder(),
+    padding: const EdgeInsets.symmetric(
+      horizontal: 48,
+    ),
+  );
+
+  final TextStyle buttonTextStyle = const TextStyle(
+    fontWeight: FontWeight.w500,
+    letterSpacing: 1,
+    fontSize: 10,
+  );
 
   @override
   final Size preferredSize = const Size.fromHeight(kToolbarHeight);
@@ -37,25 +50,50 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
     ElevatedButton getLogoutButton() {
       return ElevatedButton(
         onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          shape: const RoundedRectangleBorder(),
-        ),
+        style: buttonStyle,
         child: Row(
-          children: const [
-            Icon(Icons.logout),
-            SizedBox(
+          children: [
+            const Icon(Icons.logout),
+            const SizedBox(
               width: 4,
             ),
             Text(
               "LOGOUT",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-                letterSpacing: 4,
-                fontSize: 10,
-              ),
+              style: buttonTextStyle,
             ),
           ],
         ),
+      );
+    }
+
+    ElevatedButton getSettingButton() {
+      return ElevatedButton(
+        onPressed: () {},
+        style: buttonStyle,
+        child: Row(
+          children: [
+            const Icon(Icons.settings),
+            const SizedBox(
+              width: 4,
+            ),
+            Text(
+              "SETTINGS",
+              style: buttonTextStyle,
+            ),
+          ],
+        ),
+      );
+    }
+
+    Row getButtons() {
+      return Row(
+        children: [
+          getSettingButton(),
+          const SizedBox(
+            width: 16,
+          ),
+          getLogoutButton(),
+        ],
       );
     }
 
@@ -64,7 +102,7 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           getUserTag(),
-          getLogoutButton(),
+          getButtons(),
         ],
       ),
     );

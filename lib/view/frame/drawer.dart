@@ -18,7 +18,7 @@ class FrameDrawer extends ConsumerWidget {
             Text(
               "Aeronaut\u2120",
               style: TextStyle(
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
                 fontSize: 20,
               ),
             ),
@@ -26,7 +26,7 @@ class FrameDrawer extends ConsumerWidget {
               "0.0.0",
               style: TextStyle(
                 fontWeight: FontWeight.w300,
-                fontSize: 12,
+                fontSize: 10,
               ),
             ),
           ],
@@ -46,8 +46,8 @@ class FrameDrawer extends ConsumerWidget {
         child: Text(
           "${screenPage.name[0].toUpperCase()}${screenPage.name.substring(1).toLowerCase()}",
           style: const TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 20,
+            fontWeight: FontWeight.w500,
+            fontSize: 18,
           ),
         ),
       );
@@ -77,8 +77,8 @@ class FrameDrawer extends ConsumerWidget {
             Text(
               "Paveway\u00A9",
               style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                fontSize: 16,
               ),
             ),
             Text(

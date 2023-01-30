@@ -9,10 +9,10 @@ class Frame extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Scaffold(
+    return Scaffold(
       appBar: FrameAppBar(),
-      drawer: FrameDrawer(),
-      body: Screen(),
+      drawer: const FrameDrawer(),
+      body: const Screen(),
     );
   }
 }
