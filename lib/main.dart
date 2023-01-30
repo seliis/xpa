@@ -10,7 +10,7 @@ void main() {
         theme: ThemeData(
           useMaterial3: true,
         ),
-        home: Frame(),
+        home: const Frame(),
       ),
     ),
   );

@@ -6,7 +6,7 @@ class Dashboard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
+    return const Center(
       child: Text("Dashboard"),
     );
   }
