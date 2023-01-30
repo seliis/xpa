@@ -18,7 +18,7 @@ class FrameDrawer extends ConsumerWidget {
             Text(
               "Aeronaut\u2120",
               style: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
                 fontSize: 20,
               ),
             ),
@@ -41,6 +41,7 @@ class FrameDrawer extends ConsumerWidget {
         ),
         onPressed: () {
           ref.read(screenProvider.notifier).state = screenPage;
+          Navigator.pop(context);
         },
         child: Text(
           "${screenPage.name[0].toUpperCase()}${screenPage.name.substring(1).toLowerCase()}",
@@ -76,7 +77,7 @@ class FrameDrawer extends ConsumerWidget {
             Text(
               "Paveway\u00A9",
               style: TextStyle(
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w700,
                 fontSize: 20,
               ),
             ),

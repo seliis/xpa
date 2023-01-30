@@ -14,19 +14,19 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           Text(
-            "Ahri Kim",
+            "KIM AHRI",
             style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              fontSize: 14,
             ),
           ),
           SizedBox(
-            height: 4,
+            height: 2,
           ),
           Text(
-            "Mechanic",
+            "BOEING 777-300ER AIRFRAME MECHANIC",
             style: TextStyle(
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w400,
               fontSize: 10,
             ),
           ),
@@ -46,7 +46,14 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
             SizedBox(
               width: 4,
             ),
-            Text("Logout"),
+            Text(
+              "LOGOUT",
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+                letterSpacing: 4,
+                fontSize: 10,
+              ),
+            ),
           ],
         ),
       );

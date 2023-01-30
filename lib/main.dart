@@ -9,6 +9,7 @@ void main() {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
+          fontFamily: "NanumSquareNeo",
         ),
         home: const Frame(),
       ),
