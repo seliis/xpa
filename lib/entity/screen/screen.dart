@@ -1,4 +1,4 @@
 enum ScreenPage {
   dashboard,
-  assignment,
+  mission,
 }

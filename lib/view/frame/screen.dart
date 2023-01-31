@@ -15,8 +15,8 @@ class Screen extends ConsumerWidget {
       switch (screenPage) {
         case ScreenPage.dashboard:
           return const Dashboard();
-        case ScreenPage.assignment:
-          return const Assignment();
+        case ScreenPage.mission:
+          return const Mission();
       }
     }
 

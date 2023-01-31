@@ -44,9 +44,10 @@ class FrameDrawer extends ConsumerWidget {
           Navigator.pop(context);
         },
         child: Text(
-          "${screenPage.name[0].toUpperCase()}${screenPage.name.substring(1).toLowerCase()}",
+          screenPage.name.toUpperCase(),
           style: const TextStyle(
             fontWeight: FontWeight.w500,
+            letterSpacing: 2,
             fontSize: 18,
           ),
         ),
@@ -61,7 +62,7 @@ class FrameDrawer extends ConsumerWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             getMenu(ScreenPage.dashboard),
-            getMenu(ScreenPage.assignment),
+            getMenu(ScreenPage.mission),
           ],
         ),
       );
