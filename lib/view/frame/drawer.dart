@@ -16,10 +16,10 @@ class FrameDrawer extends ConsumerWidget {
         child: Column(
           children: const [
             Text(
-              "Aeronaut\u2120",
+              "GLIDEPATH\u2120",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
             Text(
@@ -67,22 +67,41 @@ class FrameDrawer extends ConsumerWidget {
       );
     }
 
+    Row getCompanyName() {
+      const FontWeight fontWeight = FontWeight.w500;
+      const double fontSize = 12;
+
+      return Row(
+        children: const [
+          Text(
+            "CASCADE",
+            style: TextStyle(
+              fontWeight: fontWeight,
+              fontSize: fontSize,
+            ),
+          ),
+          Text(
+            "CLEARANCE\u00A9",
+            style: TextStyle(
+              fontWeight: fontWeight,
+              color: Colors.pink,
+              fontSize: fontSize,
+            ),
+          ),
+        ],
+      );
+    }
+
     Container getFooter() {
       return Container(
         alignment: Alignment.topLeft,
         margin: margin,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Text(
-              "Paveway\u00A9",
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 16,
-              ),
-            ),
-            Text(
-              "2023",
+          children: [
+            getCompanyName(),
+            const Text(
+              "2023 Copyright",
               style: TextStyle(
                 fontWeight: FontWeight.w300,
                 fontSize: 10,

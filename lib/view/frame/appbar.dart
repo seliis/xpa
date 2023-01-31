@@ -5,7 +5,6 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
   FrameAppBar({super.key});
 
   final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-    shape: const RoundedRectangleBorder(),
     padding: const EdgeInsets.symmetric(
       horizontal: 48,
     ),
@@ -29,7 +28,7 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
           Text(
             "KIM AHRI",
             style: TextStyle(
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w700,
               fontSize: 14,
             ),
           ),
@@ -39,7 +38,7 @@ class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
           Text(
             "BOEING 777-300ER AIRFRAME MECHANIC",
             style: TextStyle(
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w300,
               fontSize: 10,
             ),
           ),
