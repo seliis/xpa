@@ -10,7 +10,8 @@ class Mission extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final asyncMissionPackageDataResponse = ref.watch(asyncMissionPackageDataProvider);
+    final missionPackageDataProvider = ref.watch(asyncMissionPackageDataProvider);
+    final missionPackageDataNotifier = ref.watch(asyncMissionPackageDataProvider.notifier);
 
     Container getHeader(MissionPackageData data) {
       return Container(
@@ -66,15 +67,34 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    return asyncMissionPackageDataResponse.when(
-      data: (dataList) => SingleChildScrollView(
-        child: ExpansionPanelList.radio(
-          children: dataList.map(getExpansionPanelRadio).toList(),
-        ),
+    return missionPackageDataProvider.when(
+      data: (dataList) => Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(32),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    missionPackageDataNotifier.refreshMissionPackageData();
+                  },
+                  child: const Text("Refresh"),
+                ),
+                Text("${dataList.length.toString()} Assigned Missions"),
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            child: ExpansionPanelList.radio(
+              children: dataList.map(getExpansionPanelRadio).toList(),
+            ),
+          ),
+        ],
       ),
       loading: () {
         return const Center(
-          child: Text("Loading..."),
+          child: CircularProgressIndicator(),
         );
       },
       error: (error, stackTrace) {

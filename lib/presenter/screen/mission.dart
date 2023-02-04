@@ -20,6 +20,13 @@ class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageD
   Future<List<MissionPackageData>> build() async {
     return _fetchData();
   }
+
+  Future<void> refreshMissionPackageData() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      return _fetchData();
+    });
+  }
 }
 
 final asyncMissionPackageDataProvider = AsyncNotifierProvider<AsyncMissionPackageDataNotifier, List<MissionPackageData>>(
