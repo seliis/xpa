@@ -3,6 +3,7 @@ import "package:xpa/presenter/screen/mission.dart";
 import "package:xpa/router/index.dart";
 import "package:xpa/entity/index.dart";
 import "package:flutter/material.dart";
+import "package:xpa/view/index.dart";
 
 class Mission extends ConsumerWidget {
   const Mission({super.key});
@@ -39,7 +40,13 @@ class Mission extends ConsumerWidget {
             Text(data.missionPackageInfo.description),
             ElevatedButton(
               onPressed: () {
-                NavigateGraph.moveTo(context, NavigateGraph.taskPage);
+                NavigateGraph.moveTo(
+                  context,
+                  TaskPage.routeName,
+                  TaskPageArguments(
+                    missionPackageName: data.missionPackageName,
+                  ),
+                );
               },
               child: const Text("Continue"),
             ),

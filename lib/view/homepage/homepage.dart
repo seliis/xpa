@@ -7,6 +7,8 @@ import "homepage_screen.dart";
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
+  static const routeName = "homePage";
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(

@@ -1,6 +1,7 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 import "package:xpa/router/index.dart";
+import "package:xpa/view/index.dart";
 
 void main() {
   runApp(
@@ -12,7 +13,7 @@ void main() {
           brightness: Brightness.dark,
           fontFamily: "NanumSquareNeo",
         ),
-        initialRoute: NavigateGraph.homePage,
+        initialRoute: HomePage.routeName,
         onGenerateRoute: NavigateGraph.onGenerateRoute,
       ),
     ),

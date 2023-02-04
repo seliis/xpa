@@ -2,25 +2,35 @@ import "package:flutter/material.dart";
 import "package:xpa/view/index.dart";
 
 class NavigateGraph {
-  static const String homePage = "homePage";
-  static const String taskPage = "taskPage";
-
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
-      case taskPage:
-        return MaterialPageRoute(builder: (BuildContext context) => const TaskPage());
-      case homePage:
+      case TaskPage.routeName:
+        return MaterialPageRoute(
+          builder: (BuildContext context) => TaskPage(
+            taskPageArguments: routeSettings.arguments as TaskPageArguments,
+          ),
+        );
+      case HomePage.routeName:
         return MaterialPageRoute(builder: (BuildContext context) => const HomePage());
       default:
         return MaterialPageRoute(builder: (BuildContext context) => const HomePage());
     }
   }
 
-  static void moveTo(BuildContext context, String routeName) {
-    Navigator.pushNamed(context, routeName);
+  static void moveTo(BuildContext context, String routeName, [Object? arguments]) {
+    Navigator.pushNamed(
+      context,
+      routeName,
+      arguments: arguments,
+    );
   }
 
-  static void changeTo(BuildContext context, String routeName) {
-    Navigator.pushNamedAndRemoveUntil(context, routeName, (route) => false);
+  static void changeTo(BuildContext context, String routeName, [Object? arguments]) {
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      routeName,
+      arguments: arguments,
+      (route) => false,
+    );
   }
 }
