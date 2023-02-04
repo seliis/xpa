@@ -16,7 +16,7 @@ class Screen extends ConsumerWidget {
         case ScreenPage.dashboard:
           return const Dashboard();
         case ScreenPage.mission:
-          return Mission();
+          return const Mission();
       }
     }
 
