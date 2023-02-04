@@ -23,13 +23,13 @@ flutter:
   fonts:
   - family: NanumSquareNeo
     fonts:
-      - asset: assets/fonts/NanumSquareNeoOTF-aLt.otf
+      - asset: fonts/NanumSquareNeoOTF-aLt.otf
         weight: 300
-      - asset: assets/fonts/NanumSquareNeoOTF-bRg.otf
+      - asset: fonts/NanumSquareNeoOTF-bRg.otf
         weight: 400
-      - asset: assets/fonts/NanumSquareNeoOTF-cBd.otf
+      - asset: fonts/NanumSquareNeoOTF-cBd.otf
         weight: 500
-      - asset: assets/fonts/NanumSquareNeoOTF-dEb.otf
+      - asset: fonts/NanumSquareNeoOTF-dEb.otf
         weight: 600
-      - asset: assets/fonts/NanumSquareNeoOTF-eHv.otf
+      - asset: fonts/NanumSquareNeoOTF-eHv.otf
         weight: 700

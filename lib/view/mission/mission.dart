@@ -1,65 +1,62 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
-class MissionCard extends ConsumerWidget {
-  const MissionCard({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ElevatedButton(
-      onPressed: () {},
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 24,
-        ),
-        alignment: Alignment.centerLeft,
-        shape: const RoundedRectangleBorder(),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "missionName",
-            style: TextStyle(
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
-            ),
-          ),
-          Text("assignDate"),
-        ],
-      ),
-    );
-  }
-}
-
 class Mission extends ConsumerWidget {
-  const Mission({super.key});
+  Mission({super.key});
+
+  final List<Map<String, dynamic>> _dummyData = List.generate(
+    1,
+    (int index) {
+      return {
+        "index": index,
+      };
+    },
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Row(
-      children: [
-        Container(
-          //color: Colors.pink,
-          width: MediaQuery.of(context).size.width * 0.2,
-          child: ListView.separated(
-            itemCount: 3,
-            padding: const EdgeInsets.all(8),
-            itemBuilder: (BuildContext context, int index) {
-              return MissionCard();
-            },
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(
-                height: 8,
-              );
-            },
-          ),
-        ),
-        Expanded(
-          child: Container(),
-        ),
-      ],
+    return SingleChildScrollView(
+      child: ExpansionPanelList.radio(
+        children: _dummyData.map(
+          (Map<String, dynamic> data) {
+            return ExpansionPanelRadio(
+              value: data["index"],
+              canTapOnHeader: false,
+              headerBuilder: (BuildContext context, bool isExpanded) {
+                return Container(
+                  padding: const EdgeInsets.all(32),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: const [
+                          Text("MISSION_PACKAGE_NAME"),
+                        ],
+                      ),
+                      const Text("100%"),
+                    ],
+                  ),
+                );
+              },
+              body: Container(
+                color: Colors.black26,
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("MISSION_PACKAGE_INFO"),
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("CONTINUE"),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ).toList(),
+      ),
     );
   }
 }
