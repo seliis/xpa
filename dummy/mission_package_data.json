@@ -1,0 +1,17 @@
+[
+  {
+    "id": 0,
+    "mission_package_name": "mission_package_name_a",
+    "mission_package_info": "mission_package_info_a"
+  },
+  {
+    "id": 1,
+    "mission_package_name": "mission_package_name_b",
+    "mission_package_info": "mission_package_info_b"
+  },
+  {
+    "id": 2,
+    "mission_package_name": "mission_package_name_c",
+    "mission_package_info": "mission_package_info_c"
+  }
+]
