@@ -1,5 +1,6 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:xpa/presenter/screen/mission.dart";
+import "package:xpa/router/index.dart";
 import "package:xpa/entity/index.dart";
 import "package:flutter/material.dart";
 
@@ -37,7 +38,9 @@ class Mission extends ConsumerWidget {
           children: [
             Text(data.missionPackageInfo.description),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                NavigateGraph.moveTo(context, NavigateGraph.taskPage);
+              },
               child: const Text("Continue"),
             ),
           ],

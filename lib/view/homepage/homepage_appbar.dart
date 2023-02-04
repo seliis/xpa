@@ -1,8 +1,8 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
 
-class FrameAppBar extends ConsumerWidget implements PreferredSizeWidget {
-  FrameAppBar({super.key});
+class HomePageAppBar extends ConsumerWidget implements PreferredSizeWidget {
+  HomePageAppBar({super.key});
 
   final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
     padding: const EdgeInsets.symmetric(

@@ -3,8 +3,8 @@ import "package:xpa/presenter/index.dart";
 import "package:xpa/entity/index.dart";
 import "package:flutter/material.dart";
 
-class FrameDrawer extends ConsumerWidget {
-  const FrameDrawer({super.key});
+class HomePageDrawer extends ConsumerWidget {
+  const HomePageDrawer({super.key});
 
   final EdgeInsets margin = const EdgeInsets.all(16);
 

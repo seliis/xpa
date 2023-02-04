@@ -4,8 +4,8 @@ import "package:xpa/entity/index.dart";
 import "package:flutter/material.dart";
 import "package:xpa/view/index.dart";
 
-class Screen extends ConsumerWidget {
-  const Screen({super.key});
+class HomePageScreen extends ConsumerWidget {
+  const HomePageScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
