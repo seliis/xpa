@@ -1,6 +1,6 @@
-import "package:xpa/entity/network/mission_package_data_response.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:xpa/presenter/screen/mission.dart";
+import "package:xpa/entity/index.dart";
 import "package:flutter/material.dart";
 
 class Mission extends ConsumerWidget {
@@ -10,7 +10,7 @@ class Mission extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncMissionPackageDataResponse = ref.watch(asyncMissionPackageDataProvider);
 
-    Container getHeader(MissionPackageDataResponse data) {
+    Container getHeader(MissionPackageData data) {
       return Container(
         padding: const EdgeInsets.all(32),
         child: Row(
@@ -27,7 +27,7 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    Container getBody(MissionPackageDataResponse data) {
+    Container getBody(MissionPackageData data) {
       return Container(
         color: Colors.black26,
         width: MediaQuery.of(context).size.width,
@@ -35,7 +35,7 @@ class Mission extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(data.missionPackageInfo),
+            Text(data.missionPackageInfo.description),
             ElevatedButton(
               onPressed: () {},
               child: const Text("Continue"),
@@ -45,7 +45,7 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    ExpansionPanelRadio getExpansionPanelRadio(MissionPackageDataResponse data) {
+    ExpansionPanelRadio getExpansionPanelRadio(MissionPackageData data) {
       return ExpansionPanelRadio(
         value: data.id,
         canTapOnHeader: false,
