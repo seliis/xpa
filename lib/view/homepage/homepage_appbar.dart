@@ -97,6 +97,7 @@ class HomePageAppBar extends ConsumerWidget implements PreferredSizeWidget {
     }
 
     return AppBar(
+      scrolledUnderElevation: 0.0,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

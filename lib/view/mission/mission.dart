@@ -32,7 +32,6 @@ class Mission extends ConsumerWidget {
 
     Container getBody(MissionPackageData data) {
       return Container(
-        color: Colors.black26,
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(32),
         child: Row(
@@ -67,63 +66,68 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    return missionPackageDataProvider.when(
-      data: (dataList) => Column(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    missionPackageDataNotifier.refreshMissionPackageData();
-                  },
-                  child: const Text("Refresh"),
-                ),
-                Text("${dataList.length.toString()} Assigned Missions"),
-              ],
-            ),
-          ),
-          SingleChildScrollView(
-            child: ExpansionPanelList.radio(
-              children: dataList.map(getExpansionPanelRadio).toList(),
-            ),
-          ),
-        ],
-      ),
-      loading: () {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-      error: (error, stackTrace) {
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      children: [
+        Container(
+          padding: const EdgeInsets.all(32),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                error.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w700,
-                  color: Colors.red,
-                  fontSize: 20,
-                ),
+              ElevatedButton(
+                onPressed: () {
+                  missionPackageDataNotifier.refreshMissionPackageData();
+                },
+                child: const Text("Refresh"),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                stackTrace.toString(),
-                style: const TextStyle(
-                  fontWeight: FontWeight.w300,
-                ),
-              ),
+              Text("${missionPackageDataNotifier.getAssignedMissionCount()} Assigned"),
             ],
           ),
-        );
-      },
+        ),
+        const Divider(),
+        Expanded(
+          child: missionPackageDataProvider.when(
+            data: (dataList) {
+              return SingleChildScrollView(
+                child: ExpansionPanelList.radio(
+                  children: dataList.map(getExpansionPanelRadio).toList(),
+                ),
+              );
+            },
+            loading: () {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+            error: (error, stackTrace) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      error.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w700,
+                        color: Colors.red,
+                        fontSize: 20,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                      stackTrace.toString(),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 }

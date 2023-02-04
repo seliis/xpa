@@ -9,12 +9,15 @@ class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageD
     //final jsonData = json.decode(response) as List<Map<String, dynamic>>; // why didn't work?
     final jsonData = jsonDecode(response) as List<dynamic>; // why did work?
     //final jsonData = jsonDecode(response); // why didn't work?
+    assignedMissionCount = jsonData.length;
     return jsonData.map(
       (data) {
         return MissionPackageData.fromJson(data);
       },
     ).toList();
   }
+
+  static int assignedMissionCount = 0;
 
   @override
   Future<List<MissionPackageData>> build() async {
@@ -26,6 +29,10 @@ class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageD
     state = await AsyncValue.guard(() async {
       return _fetchData();
     });
+  }
+
+  int getAssignedMissionCount() {
+    return assignedMissionCount;
   }
 }
 
