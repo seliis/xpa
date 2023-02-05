@@ -19,6 +19,7 @@ class HomePageDrawer extends ConsumerWidget {
               "GLIDEPATH\u2120",
               style: TextStyle(
                 fontWeight: FontWeight.w500,
+                letterSpacing: 1,
                 fontSize: 16,
               ),
             ),

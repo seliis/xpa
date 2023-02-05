@@ -5,11 +5,12 @@ import "dart:convert";
 
 class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageData>> {
   Future<List<MissionPackageData>> _fetchData() async {
+    _jsonDataSize = -1; // for detect loading state in view
     final String response = await InteractorOfMission.requestDummyMissionPackageData();
     //final jsonData = json.decode(response) as List<Map<String, dynamic>>; // why didn't work?
     final jsonData = jsonDecode(response) as List<dynamic>; // why did work?
     //final jsonData = jsonDecode(response); // why didn't work?
-    assignedMissionCount = jsonData.length;
+    _jsonDataSize = jsonData.length;
     return jsonData.map(
       (data) {
         return MissionPackageData.fromJson(data);
@@ -17,22 +18,31 @@ class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageD
     ).toList();
   }
 
-  static int assignedMissionCount = 0;
+  int _jsonDataSize = 0;
 
   @override
   Future<List<MissionPackageData>> build() async {
-    return _fetchData();
+    return await _fetchData();
   }
 
   Future<void> refreshMissionPackageData() async {
     state = const AsyncValue.loading();
-    state = await AsyncValue.guard(() async {
-      return _fetchData();
-    });
+    state = await AsyncValue.guard(
+      () async {
+        return await _fetchData();
+      },
+    );
   }
 
-  int getAssignedMissionCount() {
-    return assignedMissionCount;
+  String getAssignedQuantityStateMsg() {
+    switch (_jsonDataSize) {
+      case -1:
+        return "Loading...";
+      case 0:
+        return "Not Assigned Yet";
+      default:
+        return "$_jsonDataSize Assigned";
+    }
   }
 }
 

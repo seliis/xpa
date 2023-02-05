@@ -24,7 +24,7 @@ class Mission extends ConsumerWidget {
                 Text(data.missionPackageName),
               ],
             ),
-            const Text("100%"),
+            const Text("0%"),
           ],
         ),
       );
@@ -79,7 +79,7 @@ class Mission extends ConsumerWidget {
                 },
                 child: const Text("Refresh"),
               ),
-              Text("${missionPackageDataNotifier.getAssignedMissionCount()} Assigned"),
+              Text(missionPackageDataNotifier.getAssignedQuantityStateMsg()),
             ],
           ),
         ),
