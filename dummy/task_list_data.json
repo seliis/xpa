@@ -1,0 +1,22 @@
+[
+  {
+    "id": 0,
+    "task_name": "Prepare For Aircraft",
+    "task_detail": [
+      "Foreign Object Check in Bay",
+      "Make Sure Clearance in Bay",
+      "Check Headset Status",
+      "Check NWS Safety Pin"
+    ]
+  },
+  {
+    "id": 1,
+    "task_name": "Post Aircraft Shutdown",
+    "task_detail": [
+      "Make Sure Engine Shutdown",
+      "Make Communication Establish",
+      "Give Sign for Wheel Chocks to Ground",
+      "Give Sign for Boarding Bridges to Airport"
+    ]
+  }
+]

@@ -8,7 +8,7 @@ class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageD
     _jsonDataSize = -1; // for detect loading state in view
     final String response = await InteractorOfMission.requestDummyMissionPackageData();
     //final jsonData = json.decode(response) as List<Map<String, dynamic>>; // why didn't work?
-    final jsonData = jsonDecode(response) as List<dynamic>; // why did work?
+    final List<dynamic> jsonData = jsonDecode(response) as List<dynamic>; // why did work?
     //final jsonData = jsonDecode(response); // why didn't work?
     _jsonDataSize = jsonData.length;
     return jsonData.map(
