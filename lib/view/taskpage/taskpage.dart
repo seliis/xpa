@@ -31,6 +31,7 @@ class TaskPage extends ConsumerWidget {
         child: taskListData.when(
           data: (data) {
             return ListView.separated(
+              padding: const EdgeInsets.all(32),
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 return ElevatedButton(
@@ -132,10 +133,17 @@ class TaskPage extends ConsumerWidget {
           children: [
             for (final data in taskDetailData) ...[
               Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 8,
+                padding: const EdgeInsets.all(32),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(data),
+                    Checkbox(
+                      onChanged: (bool? value) {},
+                      value: false,
+                    ),
+                  ],
                 ),
-                child: Text(data),
               ),
             ],
             getTaskDetailControl(),
