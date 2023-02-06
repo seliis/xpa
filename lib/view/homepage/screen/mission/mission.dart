@@ -10,8 +10,8 @@ class Mission extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final missionPackageDataProvider = ref.watch(asyncMissionPackageDataProvider);
     final missionPackageDataNotifier = ref.watch(asyncMissionPackageDataProvider.notifier);
+    final missionPackageData = ref.watch(asyncMissionPackageDataProvider);
 
     Container getHeader(MissionPackageData data) {
       return Container(
@@ -48,7 +48,20 @@ class Mission extends ConsumerWidget {
                   ),
                 );
               },
-              child: const Text("Continue"),
+              child: Row(
+                children: const [
+                  Icon(Icons.arrow_right_alt),
+                  SizedBox(width: 4),
+                  Text(
+                    "CONTINUE",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      letterSpacing: 1,
+                      fontSize: 10,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -77,7 +90,20 @@ class Mission extends ConsumerWidget {
                 onPressed: () {
                   missionPackageDataNotifier.refreshMissionPackageData();
                 },
-                child: const Text("Refresh"),
+                child: Row(
+                  children: const [
+                    Icon(Icons.refresh),
+                    SizedBox(width: 4),
+                    Text(
+                      "REFRESH",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Text(missionPackageDataNotifier.getAssignedQuantityStateMsg()),
             ],
@@ -85,7 +111,7 @@ class Mission extends ConsumerWidget {
         ),
         const Divider(),
         Expanded(
-          child: missionPackageDataProvider.when(
+          child: missionPackageData.when(
             data: (dataList) {
               return SingleChildScrollView(
                 child: ExpansionPanelList.radio(

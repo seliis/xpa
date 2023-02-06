@@ -1,7 +1,6 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:xpa/presenter/index.dart";
 import "package:flutter/material.dart";
-import "dart:developer";
 
 class TaskPageArguments {
   const TaskPageArguments({
@@ -22,7 +21,9 @@ class TaskPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final taskListDataNotifier = ref.watch(asyncTaskListDataProvider.notifier);
     final taskListData = ref.watch(asyncTaskListDataProvider);
+    final taskDetailDataNotifier = ref.watch(taskDetailDataProvider.notifier);
     final taskDetailData = ref.watch(taskDetailDataProvider);
 
     Expanded getTaskList() {
@@ -34,7 +35,8 @@ class TaskPage extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ElevatedButton(
                   onPressed: () {
-                    ref.watch(taskDetailDataProvider.notifier).state = data[index].taskDetail;
+                    taskDetailDataNotifier.state = data[index].taskDetail;
+                    taskListDataNotifier.selectedTask = index;
                   },
                   style: ElevatedButton.styleFrom(
                     alignment: Alignment.centerLeft,
@@ -43,6 +45,7 @@ class TaskPage extends ConsumerWidget {
                       horizontal: 16,
                       vertical: 32,
                     ),
+                    side: taskListDataNotifier.selectedTask == index ? const BorderSide(color: Colors.pink) : null,
                   ),
                   child: Text(data[index].taskName),
                 );
@@ -88,24 +91,55 @@ class TaskPage extends ConsumerWidget {
       );
     }
 
-    Expanded getTaskDetail() {
-      return Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    Container getTaskDetailControl() {
+      if (taskListDataNotifier.selectedTask != -1) {
+        return Container(
+          margin: const EdgeInsets.symmetric(
+            vertical: 16,
+          ),
+          padding: const EdgeInsets.all(32),
+          //color: Colors.black12,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              for (int j = 0; j < 10; j++) ...[
-                for (int i = 0; i < taskDetailData.length; i++) ...[
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8,
+              ElevatedButton(
+                onPressed: () {},
+                child: Row(
+                  children: const [
+                    Icon(Icons.commit),
+                    SizedBox(width: 4),
+                    Text(
+                      "Commit",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1,
+                        fontSize: 10,
+                      ),
                     ),
-                    child: Text(taskDetailData[i]),
-                  ),
-                ],
-              ],
+                  ],
+                ),
+              ),
             ],
           ),
+        );
+      }
+      return Container();
+    }
+
+    Expanded getTaskDetail() {
+      return Expanded(
+        child: ListView(
+          children: [
+            for (final data in taskDetailData) ...[
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 8,
+                ),
+                child: Text(data),
+              ),
+            ],
+            getTaskDetailControl(),
+          ],
         ),
       );
     }
@@ -118,8 +152,10 @@ class TaskPage extends ConsumerWidget {
       body: Row(
         children: [
           getTaskList(),
-          const VerticalDivider(),
-          getTaskDetail(),
+          if (taskListDataNotifier.selectedTask != -1) ...[
+            const VerticalDivider(),
+            getTaskDetail(),
+          ],
         ],
       ),
     );
