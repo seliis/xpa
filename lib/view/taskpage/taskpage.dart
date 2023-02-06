@@ -1,6 +1,8 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:xpa/presenter/index.dart";
 import "package:flutter/material.dart";
+import "package:xpa/entity/index.dart";
+import "package:xpa/view/index.dart";
 
 class TaskPageArguments {
   const TaskPageArguments({
@@ -23,8 +25,8 @@ class TaskPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final taskListDataNotifier = ref.watch(asyncTaskListDataProvider.notifier);
     final taskListData = ref.watch(asyncTaskListDataProvider);
-    final taskDetailDataNotifier = ref.watch(taskDetailDataProvider.notifier);
-    final taskDetailData = ref.watch(taskDetailDataProvider);
+    final taskStepDataNotifier = ref.watch(taskStepDataProvider.notifier);
+    final taskStepData = ref.watch(taskStepDataProvider);
 
     Expanded getTaskList() {
       return Expanded(
@@ -36,7 +38,7 @@ class TaskPage extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ElevatedButton(
                   onPressed: () {
-                    taskDetailDataNotifier.state = data[index].taskDetail;
+                    taskStepDataNotifier.state = data[index].taskStep;
                     taskListDataNotifier.selectedTask = index;
                   },
                   style: ElevatedButton.styleFrom(
@@ -62,37 +64,16 @@ class TaskPage extends ConsumerWidget {
             );
           },
           error: (error, stackTrace) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    error.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      color: Colors.red,
-                      fontSize: 20,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Text(
-                    stackTrace.toString(),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w300,
-                    ),
-                  ),
-                ],
-              ),
+            return CommonAsyncError(
+              error: error,
+              stackTrace: stackTrace,
             );
           },
         ),
       );
     }
 
-    Container getTaskDetailControl() {
+    Container getTaskStepControl() {
       if (taskListDataNotifier.selectedTask != -1) {
         return Container(
           margin: const EdgeInsets.symmetric(
@@ -127,17 +108,17 @@ class TaskPage extends ConsumerWidget {
       return Container();
     }
 
-    Expanded getTaskDetail() {
+    Expanded getTaskStep() {
       return Expanded(
         child: ListView(
           children: [
-            for (final data in taskDetailData) ...[
+            for (final TaskStepData data in taskStepData) ...[
               Container(
                 padding: const EdgeInsets.all(32),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(data),
+                    Text(data.stepName),
                     Checkbox(
                       onChanged: (bool? value) {},
                       value: false,
@@ -146,7 +127,7 @@ class TaskPage extends ConsumerWidget {
                 ),
               ),
             ],
-            getTaskDetailControl(),
+            getTaskStepControl(),
           ],
         ),
       );
@@ -162,7 +143,7 @@ class TaskPage extends ConsumerWidget {
           getTaskList(),
           if (taskListDataNotifier.selectedTask != -1) ...[
             const VerticalDivider(),
-            getTaskDetail(),
+            getTaskStep(),
           ],
         ],
       ),

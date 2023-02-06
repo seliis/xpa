@@ -26,7 +26,7 @@ class HomePageAppBar extends ConsumerWidget implements PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
           Text(
-            "Ahri",
+            "AHRI",
             style: TextStyle(
               fontWeight: FontWeight.w700,
               fontSize: 14,

@@ -7,8 +7,7 @@ class AsyncTaskListNotifier extends AsyncNotifier<List<TaskListData>> {
   Future<List<TaskListData>> _fetchData() async {
     final String response = await InteractorOfTask.requestDummyTaskListData();
     final List<dynamic> jsonData = jsonDecode(response) as List<dynamic>;
-    ref.watch(taskDetailDataProvider.notifier).state = jsonData[0]["task_detail"];
-    selectedTask = 0;
+    _setInitState(jsonData);
     return jsonData.map(
       (data) {
         return TaskListData.fromJson(data);
@@ -17,6 +16,11 @@ class AsyncTaskListNotifier extends AsyncNotifier<List<TaskListData>> {
   }
 
   int selectedTask = -1;
+
+  void _setInitState(List<dynamic> jsonData) {
+    ref.watch(taskStepDataProvider.notifier).state = jsonData[0]["task_step"] as List<TaskStepData>;
+    selectedTask = 0;
+  }
 
   @override
   Future<List<TaskListData>> build() async {
@@ -30,8 +34,8 @@ final asyncTaskListDataProvider = AsyncNotifierProvider<AsyncTaskListNotifier, L
   },
 );
 
-final taskDetailDataProvider = StateProvider<List<dynamic>>(
+final taskStepDataProvider = StateProvider<List<TaskStepData>>(
   (ref) {
-    return <dynamic>[];
+    return <TaskStepData>[];
   },
 );

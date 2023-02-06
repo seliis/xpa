@@ -1,9 +1,9 @@
 [
   {
     "id": 0,
-    "mission_package_name": "Aircraft Dispatch",
+    "mission_package_name": "TEST_MISSION_PACKAGE_NAME",
     "mission_package_info": {
-      "description": "Dispatching Aircraft"
+      "description": "TEST_MISSION_PACKAGE_INFO_DESCRIPTION"
     }
   }
 ]

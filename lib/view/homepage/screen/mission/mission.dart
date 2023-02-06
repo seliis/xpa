@@ -125,30 +125,9 @@ class Mission extends ConsumerWidget {
               );
             },
             error: (error, stackTrace) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      error.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w700,
-                        color: Colors.red,
-                        fontSize: 20,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      stackTrace.toString(),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                  ],
-                ),
+              return CommonAsyncError(
+                error: error,
+                stackTrace: stackTrace,
               );
             },
           ),
