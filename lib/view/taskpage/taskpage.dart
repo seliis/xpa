@@ -16,6 +16,7 @@ class TaskPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final taskPackageDataNotifier = ref.watch(asyncTaskPackageDataProvider.notifier);
+    final stepPackageDataNotifier = ref.watch(stepPackageDataProvider.notifier);
     final taskPackageData = ref.watch(asyncTaskPackageDataProvider);
     final stepPackageData = ref.watch(stepPackageDataProvider);
 
@@ -64,13 +65,54 @@ class TaskPage extends ConsumerWidget {
       );
     }
 
+    Card getStepCard(int stepIndex) {
+      final StepPackage stepPackage = stepPackageData[stepIndex];
+
+      Widget getSecondary() {
+        switch (stepPackage.overlapCheckLevel) {
+          case 0:
+            return const SizedBox.shrink();
+          case 1:
+            return const Icon(Icons.star_border_purple500);
+          case 2:
+            return const Icon(Icons.hotel_class_outlined);
+          default:
+            return const SizedBox.shrink();
+        }
+      }
+
+      return Card(
+        margin: const EdgeInsets.all(8),
+        child: CheckboxListTile(
+          onChanged: (bool? changedValue) {
+            stepPackageDataNotifier.setDone(
+              stepIndex,
+              changedValue,
+            );
+          },
+          selected: stepPackage.done,
+          value: stepPackage.done,
+          title: Text(
+            stepPackage.name,
+          ),
+          subtitle: Text(
+            stepPackage.desc,
+          ),
+          secondary: getSecondary(),
+          isThreeLine: true,
+          dense: true,
+          controlAffinity: ListTileControlAffinity.leading,
+        ),
+      );
+    }
+
     Container getTaskStepControl() {
       if (taskPackageDataNotifier.selectedTask != -1) {
         return Container(
           margin: const EdgeInsets.symmetric(
             vertical: 16,
           ),
-          padding: const EdgeInsets.all(32),
+          padding: const EdgeInsets.all(8),
           //color: Colors.black12,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -103,20 +145,8 @@ class TaskPage extends ConsumerWidget {
       return Expanded(
         child: ListView(
           children: [
-            for (final StepPackage data in stepPackageData) ...[
-              Container(
-                padding: const EdgeInsets.all(32),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(data.name),
-                    Checkbox(
-                      onChanged: (bool? value) {},
-                      value: false,
-                    ),
-                  ],
-                ),
-              ),
+            for (int stepIndex = 0; stepIndex < stepPackageData.length; stepIndex++) ...[
+              getStepCard(stepIndex)
             ],
             getTaskStepControl(),
           ],

@@ -3,7 +3,7 @@ import "package:xpa/interactor/index.dart";
 import "package:xpa/entity/index.dart";
 import "dart:convert";
 
-class AsyncTaskListNotifier extends AsyncNotifier<List<TaskPackage>> {
+class AsyncTaskPackageNotifier extends AsyncNotifier<List<TaskPackage>> {
   Future<List<TaskPackage>> _fetchData() async {
     final String response = await InteractorOfTask.requestDummyTaskData();
     final List<Map<String, dynamic>> jsonData = List<Map<String, dynamic>>.from(
@@ -26,11 +26,7 @@ class AsyncTaskListNotifier extends AsyncNotifier<List<TaskPackage>> {
 
   void setStepPackageProviderState(List<dynamic> stepData) {
     final List<Map<String, dynamic>> typedStepData = List<Map<String, dynamic>>.from(stepData);
-    ref.watch(stepPackageDataProvider.notifier).state = typedStepData.map(
-      (Map<String, dynamic> eachStep) {
-        return StepPackage.fromJson(eachStep);
-      },
-    ).toList();
+    ref.watch(stepPackageDataProvider.notifier).changeState(typedStepData);
   }
 
   @override
@@ -39,14 +35,38 @@ class AsyncTaskListNotifier extends AsyncNotifier<List<TaskPackage>> {
   }
 }
 
-final asyncTaskPackageDataProvider = AsyncNotifierProvider<AsyncTaskListNotifier, List<TaskPackage>>(
+final asyncTaskPackageDataProvider = AsyncNotifierProvider<AsyncTaskPackageNotifier, List<TaskPackage>>(
   () {
-    return AsyncTaskListNotifier();
+    return AsyncTaskPackageNotifier();
   },
 );
 
-final stepPackageDataProvider = StateProvider<List<StepPackage>>(
+class StepPackageNotifier extends StateNotifier<List<StepPackage>> {
+  StepPackageNotifier() : super(<StepPackage>[]);
+
+  void changeState(List<Map<String, dynamic>> typedStepData) {
+    state = typedStepData.map((Map<String, dynamic> eachStep) {
+      return StepPackage.fromJson(eachStep);
+    }).toList();
+  }
+
+  void setDone(int index, bool? changedValue) {
+    state = [
+      for (final StepPackage step in state) ...[
+        if (step.id == index) ...[
+          step.copyWith(
+            done: changedValue,
+          ),
+        ] else ...[
+          step,
+        ],
+      ],
+    ];
+  }
+}
+
+final stepPackageDataProvider = StateNotifierProvider<StepPackageNotifier, List<StepPackage>>(
   (ref) {
-    return <StepPackage>[];
+    return StepPackageNotifier();
   },
 );

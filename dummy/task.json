@@ -5,8 +5,24 @@
     "step": [
       {
         "id": 0,
-        "name": "STEP_PACKAGE_NAME",
-        "desc": "STEP_PACKAGE_DESC"
+        "name": "STEP_PACKAGE_NAME_1",
+        "desc": "STEP_PACKAGE_DESC_1",
+        "done": false,
+        "overlap_check_level": 0
+      },
+      {
+        "id": 1,
+        "name": "STEP_PACKAGE_NAME_2",
+        "desc": "STEP_PACKAGE_DESC_2",
+        "done": false,
+        "overlap_check_level": 1
+      },
+      {
+        "id": 2,
+        "name": "STEP_PACKAGE_NAME_3",
+        "desc": "STEP_PACKAGE_DESC_3",
+        "done": false,
+        "overlap_check_level": 2
       }
     ]
   }
