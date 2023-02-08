@@ -21,7 +21,7 @@ class Mission extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Text(data.missionPackageName),
+                Text(data.name),
               ],
             ),
             const Text("0%"),
@@ -37,14 +37,14 @@ class Mission extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(data.missionPackageInfo.description),
+            Text(data.desc),
             ElevatedButton(
               onPressed: () {
-                NavigateGraph.moveTo(
+                RouteGraph.moveTo(
                   context,
                   TaskPage.routeName,
                   TaskPageArguments(
-                    missionPackageName: data.missionPackageName,
+                    missionPackageName: data.name,
                   ),
                 );
               },

@@ -4,14 +4,6 @@ import "package:flutter/material.dart";
 import "package:xpa/entity/index.dart";
 import "package:xpa/view/index.dart";
 
-class TaskPageArguments {
-  const TaskPageArguments({
-    required this.missionPackageName,
-  });
-
-  final String missionPackageName;
-}
-
 class TaskPage extends ConsumerWidget {
   const TaskPage({
     super.key,
@@ -23,14 +15,14 @@ class TaskPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final taskListDataNotifier = ref.watch(asyncTaskListDataProvider.notifier);
-    final taskListData = ref.watch(asyncTaskListDataProvider);
-    final taskStepDataNotifier = ref.watch(taskStepDataProvider.notifier);
-    final taskStepData = ref.watch(taskStepDataProvider);
+    final taskPackageDataNotifier = ref.watch(asyncTaskPackageDataProvider.notifier);
+    final taskPackageData = ref.watch(asyncTaskPackageDataProvider);
+    final stepPackageDataNotifier = ref.watch(stepPackageDataProvider.notifier);
+    final stepPackageData = ref.watch(stepPackageDataProvider);
 
     Expanded getTaskList() {
       return Expanded(
-        child: taskListData.when(
+        child: taskPackageData.when(
           data: (data) {
             return ListView.separated(
               padding: const EdgeInsets.all(32),
@@ -38,8 +30,10 @@ class TaskPage extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ElevatedButton(
                   onPressed: () {
-                    taskStepDataNotifier.state = data[index].taskStep;
-                    taskListDataNotifier.selectedTask = index;
+                    stepPackageDataNotifier.state = data[index].step.map((eachStep) {
+                      return StepPackage.fromJson(eachStep);
+                    }).toList();
+                    taskPackageDataNotifier.selectedTask = index;
                   },
                   style: ElevatedButton.styleFrom(
                     alignment: Alignment.centerLeft,
@@ -48,9 +42,9 @@ class TaskPage extends ConsumerWidget {
                       horizontal: 16,
                       vertical: 32,
                     ),
-                    side: taskListDataNotifier.selectedTask == index ? const BorderSide(color: Colors.pink) : null,
+                    side: taskPackageDataNotifier.selectedTask == index ? const BorderSide(color: Colors.pink) : null,
                   ),
-                  child: Text(data[index].taskName),
+                  child: Text(data[index].name),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
@@ -74,7 +68,7 @@ class TaskPage extends ConsumerWidget {
     }
 
     Container getTaskStepControl() {
-      if (taskListDataNotifier.selectedTask != -1) {
+      if (taskPackageDataNotifier.selectedTask != -1) {
         return Container(
           margin: const EdgeInsets.symmetric(
             vertical: 16,
@@ -112,13 +106,13 @@ class TaskPage extends ConsumerWidget {
       return Expanded(
         child: ListView(
           children: [
-            for (final TaskStepData data in taskStepData) ...[
+            for (final StepPackage data in stepPackageData) ...[
               Container(
                 padding: const EdgeInsets.all(32),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(data.stepName),
+                    Text(data.name),
                     Checkbox(
                       onChanged: (bool? value) {},
                       value: false,
@@ -141,7 +135,7 @@ class TaskPage extends ConsumerWidget {
       body: Row(
         children: [
           getTaskList(),
-          if (taskListDataNotifier.selectedTask != -1) ...[
+          if (taskPackageDataNotifier.selectedTask != -1) ...[
             const VerticalDivider(),
             getTaskStep(),
           ],

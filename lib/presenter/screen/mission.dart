@@ -6,7 +6,7 @@ import "dart:convert";
 class AsyncMissionPackageDataNotifier extends AsyncNotifier<List<MissionPackageData>> {
   Future<List<MissionPackageData>> _fetchData() async {
     _jsonDataSize = -1; // for detect loading state in view
-    final String response = await InteractorOfMission.requestDummyMissionPackageData();
+    final String response = await InteractorOfMission.requestDummyMissionData();
     //final jsonData = json.decode(response) as List<Map<String, dynamic>>; // why didn't work?
     final List<dynamic> jsonData = jsonDecode(response) as List<dynamic>; // why did work?
     //final jsonData = jsonDecode(response); // why didn't work?

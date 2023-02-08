@@ -1,7 +1,8 @@
 import "package:flutter/material.dart";
+import "package:xpa/entity/index.dart";
 import "package:xpa/view/index.dart";
 
-class NavigateGraph {
+class RouteGraph {
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
       case TaskPage.routeName:

@@ -14,7 +14,7 @@ void main() {
           fontFamily: "NanumSquareNeo",
         ),
         initialRoute: HomePage.routeName,
-        onGenerateRoute: NavigateGraph.onGenerateRoute,
+        onGenerateRoute: RouteGraph.onGenerateRoute,
       ),
     ),
   );
