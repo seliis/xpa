@@ -1,7 +1,17 @@
 [
   {
     "id": 0,
-    "name": "MISSION_PACKAGE_NAME",
-    "desc": "MISSION_PACKAGE_DESC"
+    "name": "MISSION_PACKAGE_NAME_1",
+    "desc": "MISSION_PACKAGE_DESC_1"
+  },
+  {
+    "id": 1,
+    "name": "MISSION_PACKAGE_NAME_2",
+    "desc": "MISSION_PACKAGE_DESC_2"
+  },
+  {
+    "id": 2,
+    "name": "MISSION_PACKAGE_NAME_3",
+    "desc": "MISSION_PACKAGE_DESC_3"
   }
 ]

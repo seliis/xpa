@@ -23,9 +23,9 @@ class TaskPage extends ConsumerWidget {
     Expanded getTaskList() {
       return Expanded(
         child: taskPackageData.when(
-          data: (data) {
+          data: (List<TaskPackage> data) {
             return ListView.separated(
-              padding: const EdgeInsets.all(32),
+              padding: const EdgeInsets.all(8),
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 return ElevatedButton(
@@ -35,7 +35,9 @@ class TaskPage extends ConsumerWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     alignment: Alignment.centerLeft,
-                    shape: const RoundedRectangleBorder(),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 32,
@@ -80,6 +82,27 @@ class TaskPage extends ConsumerWidget {
             return const SizedBox.shrink();
         }
       }
+
+      // Think: Can be give color tape on left border only with below code.
+      // Card(
+      //   child: ClipPath(
+      //     child: Container(
+      //       padding: EdgeInsets.all(16),
+      //       decoration: BoxDecoration(
+      //         border: Border(
+      //           left: BorderSide(color: Colors.greenAccent, width: 5),
+      //         ),
+      //       ),
+      //       child: Text(
+      //         'Product Name',
+      //         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+      //       ),
+      //     ),
+      //     clipper: ShapeBorderClipper(
+      //         shape: RoundedRectangleBorder(
+      //             borderRadius: BorderRadius.circular(3))),
+      //   ),
+      // );
 
       return Card(
         margin: const EdgeInsets.all(8),

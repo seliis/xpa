@@ -9,7 +9,7 @@ class AsyncTaskPackageNotifier extends AsyncNotifier<List<TaskPackage>> {
     final List<Map<String, dynamic>> jsonData = List<Map<String, dynamic>>.from(
       jsonDecode(response),
     );
-    _setInitState(jsonData);
+    _setInitState(jsonData[0]);
     return jsonData.map(
       (Map<String, dynamic> eachTask) {
         return TaskPackage.fromJson(eachTask);
@@ -19,14 +19,21 @@ class AsyncTaskPackageNotifier extends AsyncNotifier<List<TaskPackage>> {
 
   int selectedTask = -1;
 
-  void _setInitState(List<Map<String, dynamic>> jsonData) {
-    setStepPackageProviderState(jsonData[0]["step"]);
+  void _setInitState(Map<String, dynamic> firstJsonData) {
+    final List<Map<String, dynamic>> stepData = List<Map<String, dynamic>>.from(
+      firstJsonData["step"],
+    );
+    final List<StepPackage> stepPackageList = stepData.map(
+      (Map<String, dynamic> eachStep) {
+        return StepPackage.fromJson(eachStep);
+      },
+    ).toList();
+    setStepPackageProviderState(stepPackageList);
     selectedTask = 0;
   }
 
-  void setStepPackageProviderState(List<dynamic> stepData) {
-    final List<Map<String, dynamic>> typedStepData = List<Map<String, dynamic>>.from(stepData);
-    ref.watch(stepPackageDataProvider.notifier).changeState(typedStepData);
+  void setStepPackageProviderState(List<StepPackage> stepPackageList) {
+    ref.watch(stepPackageDataProvider.notifier).changeState(stepPackageList);
   }
 
   @override
@@ -44,10 +51,14 @@ final asyncTaskPackageDataProvider = AsyncNotifierProvider<AsyncTaskPackageNotif
 class StepPackageNotifier extends StateNotifier<List<StepPackage>> {
   StepPackageNotifier() : super(<StepPackage>[]);
 
-  void changeState(List<Map<String, dynamic>> typedStepData) {
-    state = typedStepData.map((Map<String, dynamic> eachStep) {
-      return StepPackage.fromJson(eachStep);
-    }).toList();
+  // void changeState(List<Map<String, dynamic>> typedStepData) {
+  //   state = typedStepData.map((Map<String, dynamic> eachStep) {
+  //     return StepPackage.fromJson(eachStep);
+  //   }).toList();
+  // }
+
+  void changeState(List<StepPackage> stepPackageList) {
+    state = stepPackageList;
   }
 
   void setDone(int index, bool? changedValue) {
