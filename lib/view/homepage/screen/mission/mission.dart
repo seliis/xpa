@@ -13,7 +13,7 @@ class Mission extends ConsumerWidget {
     final missionPackageDataNotifier = ref.watch(asyncMissionPackageDataProvider.notifier);
     final missionPackageData = ref.watch(asyncMissionPackageDataProvider);
 
-    Container getHeader(MissionPackageData data) {
+    Container getHeader(MissionPackage missionPackage) {
       return Container(
         padding: const EdgeInsets.all(32),
         child: Row(
@@ -21,7 +21,7 @@ class Mission extends ConsumerWidget {
           children: [
             Column(
               children: [
-                Text(data.name),
+                Text(missionPackage.name),
               ],
             ),
             const Text("0%"),
@@ -30,21 +30,21 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    Container getBody(MissionPackageData data) {
+    Container getBody(MissionPackage missionPackage) {
       return Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(32),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(data.desc),
+            Text(missionPackage.desc),
             ElevatedButton(
               onPressed: () {
                 RouteGraph.moveTo(
                   context,
                   TaskPage.routeName,
                   TaskPageArguments(
-                    missionPackageName: data.name,
+                    missionPackageName: missionPackage.name,
                   ),
                 );
               },
@@ -68,14 +68,14 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    ExpansionPanelRadio getExpansionPanelRadio(MissionPackageData data) {
+    ExpansionPanelRadio getExpansionPanelRadio(MissionPackage missionPackage) {
       return ExpansionPanelRadio(
-        value: data.id,
+        value: missionPackage.id,
         canTapOnHeader: false,
         headerBuilder: (BuildContext context, bool isExpanded) {
-          return getHeader(data);
+          return getHeader(missionPackage);
         },
-        body: getBody(data),
+        body: getBody(missionPackage),
       );
     }
 

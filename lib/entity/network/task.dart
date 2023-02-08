@@ -1,17 +1,3 @@
-// [ TaskPackageList: List<Map<String, dynamic>>
-//   { TaskPackage: Map<String, dynamic>
-//     "id": 0,
-//     "name": "TASK_PACKAGE_NAME",
-//     "step": [ StepPackageList: List<Map<String, dynamic>>
-//       { StepPackage: Map<String, dynamic>
-//         "id": 0,
-//         "name": "STEP_PACKAGE_NAME",
-//         "desc": "STEP_PACKAGE_DESC"
-//       }
-//     ]
-//   }
-// ]
-
 class TaskPackage {
   const TaskPackage({
     required this.id,
@@ -21,15 +7,19 @@ class TaskPackage {
 
   final int id;
   final String name;
-  final List<dynamic> step;
+  final List<StepPackage> step;
 
-  factory TaskPackage.fromJson(dynamic data) {
+  factory TaskPackage.fromJson(Map<String, dynamic> data) {
+    final List<Map<String, dynamic>> typedStepData = List<Map<String, dynamic>>.from(
+      data["step"],
+    );
+
     return TaskPackage(
       id: data["id"] as int,
       name: data["name"] as String,
-      step: data["step"].map(
-        (step) {
-          return StepPackage.fromJson(step);
+      step: typedStepData.map(
+        (Map<String, dynamic> eachStep) {
+          return StepPackage.fromJson(eachStep);
         },
       ).toList(),
     );
@@ -47,7 +37,7 @@ class StepPackage {
   final String name;
   final String desc;
 
-  factory StepPackage.fromJson(dynamic data) {
+  factory StepPackage.fromJson(Map<String, dynamic> data) {
     return StepPackage(
       id: data["id"] as int,
       name: data["name"] as String,

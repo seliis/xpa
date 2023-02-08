@@ -17,7 +17,6 @@ class TaskPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final taskPackageDataNotifier = ref.watch(asyncTaskPackageDataProvider.notifier);
     final taskPackageData = ref.watch(asyncTaskPackageDataProvider);
-    final stepPackageDataNotifier = ref.watch(stepPackageDataProvider.notifier);
     final stepPackageData = ref.watch(stepPackageDataProvider);
 
     Expanded getTaskList() {
@@ -30,9 +29,7 @@ class TaskPage extends ConsumerWidget {
               itemBuilder: (BuildContext context, int index) {
                 return ElevatedButton(
                   onPressed: () {
-                    stepPackageDataNotifier.state = data[index].step.map((eachStep) {
-                      return StepPackage.fromJson(eachStep);
-                    }).toList();
+                    taskPackageDataNotifier.setStepPackageProviderState(data[index].step);
                     taskPackageDataNotifier.selectedTask = index;
                   },
                   style: ElevatedButton.styleFrom(

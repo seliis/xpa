@@ -1,5 +1,5 @@
-class MissionPackageData {
-  const MissionPackageData({
+class MissionPackage {
+  const MissionPackage({
     required this.id,
     required this.name,
     required this.desc,
@@ -9,8 +9,8 @@ class MissionPackageData {
   final String name;
   final String desc;
 
-  factory MissionPackageData.fromJson(Map<String, dynamic> data) {
-    return MissionPackageData(
+  factory MissionPackage.fromJson(Map<String, dynamic> data) {
+    return MissionPackage(
       id: data["id"] as int,
       name: data["name"] as String,
       desc: data["desc"] as String,

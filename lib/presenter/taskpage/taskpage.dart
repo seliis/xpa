@@ -6,26 +6,31 @@ import "dart:convert";
 class AsyncTaskListNotifier extends AsyncNotifier<List<TaskPackage>> {
   Future<List<TaskPackage>> _fetchData() async {
     final String response = await InteractorOfTask.requestDummyTaskData();
-    final jsonData = json.decode(response);
+    final List<Map<String, dynamic>> jsonData = List<Map<String, dynamic>>.from(
+      jsonDecode(response),
+    );
     _setInitState(jsonData);
-    final typedJsonData = List<Map<String, dynamic>>.from(jsonData);
-    return typedJsonData.map(
-      (data) {
-        return TaskPackage.fromJson(data);
+    return jsonData.map(
+      (Map<String, dynamic> eachTask) {
+        return TaskPackage.fromJson(eachTask);
       },
     ).toList();
   }
 
   int selectedTask = -1;
 
-  void _setInitState(List<dynamic> jsonData) {
-    final Map<String, dynamic> firstTask = Map<String, dynamic>.from(jsonData[0]);
-    final stepList = List<Map<String, dynamic>>.from(firstTask["step"]);
-    final List<StepPackage> stepPackage = stepList.map((eachStep) {
-      return StepPackage.fromJson(eachStep);
-    }).toList();
-    ref.watch(stepPackageDataProvider.notifier).state = stepPackage;
+  void _setInitState(List<Map<String, dynamic>> jsonData) {
+    setStepPackageProviderState(jsonData[0]["step"]);
     selectedTask = 0;
+  }
+
+  void setStepPackageProviderState(List<dynamic> stepData) {
+    final List<Map<String, dynamic>> typedStepData = List<Map<String, dynamic>>.from(stepData);
+    ref.watch(stepPackageDataProvider.notifier).state = typedStepData.map(
+      (Map<String, dynamic> eachStep) {
+        return StepPackage.fromJson(eachStep);
+      },
+    ).toList();
   }
 
   @override
