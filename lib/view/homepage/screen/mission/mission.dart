@@ -37,7 +37,16 @@ class Mission extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(missionPackage.desc),
+            Flexible(
+              child: Container(
+                alignment: Alignment.centerLeft,
+                width: MediaQuery.of(context).size.width * 0.50,
+                child: RichText(
+                  text: TextSpan(text: missionPackage.desc),
+                  textAlign: TextAlign.justify,
+                ),
+              ),
+            ),
             CCElevatedButtonWithIcon(
               iconData: Icons.arrow_right_alt,
               buttonText: "Continue",

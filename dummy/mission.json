@@ -1,17 +1,12 @@
 [
   {
     "id": 0,
-    "name": "MISSION_PACKAGE_NAME_1",
-    "desc": "MISSION_PACKAGE_DESC_1"
+    "name": "Lorem Ipsum",
+    "desc": "Quisque ut molestie lorem. Maecenas convallis rhoncus neque, ac ultricies ipsum auctor luctus. Curabitur mollis ut lacus et aliquam. Nulla non ligula vulputate, blandit nunc egestas, aliquam mi. Morbi faucibus dignissim hendrerit. Vivamus vehicula urna eget dolor mollis sollicitudin."
   },
   {
     "id": 1,
-    "name": "MISSION_PACKAGE_NAME_2",
-    "desc": "MISSION_PACKAGE_DESC_2"
-  },
-  {
-    "id": 2,
-    "name": "MISSION_PACKAGE_NAME_3",
-    "desc": "MISSION_PACKAGE_DESC_3"
+    "name": "Fusce Diam Tellus",
+    "desc": "Curabitur sed lacus quis lacus vulputate pellentesque. Maecenas convallis maximus malesuada. Donec neque dolor, dignissim quis purus nec, semper dapibus nibh. Cras sit amet mi elementum, ornare nunc sit amet, accumsan eros. Phasellus at efficitur massa."
   }
 ]

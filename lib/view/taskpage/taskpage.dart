@@ -121,9 +121,18 @@ class TaskPage extends ConsumerWidget {
           value: stepPackage.done,
           title: Text(
             stepPackage.name,
+            style: const TextStyle(
+              fontWeight: FontWeight.w700,
+              color: Colors.pink,
+            ),
           ),
           subtitle: Text(
             stepPackage.desc,
+            style: const TextStyle(
+              fontWeight: FontWeight.w300,
+              color: Colors.grey,
+            ),
+            textAlign: TextAlign.justify,
           ),
           secondary: getSecondary(),
           isThreeLine: true,
@@ -172,8 +181,8 @@ class TaskPage extends ConsumerWidget {
             Text(
               taskPageArguments.missionPackageName,
               style: const TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 12,
+                fontWeight: FontWeight.w700,
+                fontSize: 18,
               ),
             ),
             getControlButtons(),
