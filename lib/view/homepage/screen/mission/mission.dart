@@ -50,7 +50,14 @@ class Mission extends ConsumerWidget {
                 ),
               ],
             ),
-            const Text("0%"),
+            const Text(
+              "0%",
+              style: TextStyle(
+                fontFamily: FontName.jetBrainsMono,
+                fontWeight: FontWeight.w100,
+                fontSize: 24,
+              ),
+            ),
           ],
         ),
       );
