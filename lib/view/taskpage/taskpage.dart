@@ -20,6 +20,10 @@ class TaskPage extends ConsumerWidget {
     final taskPackageData = ref.watch(asyncTaskPackageDataProvider);
     final stepPackageData = ref.watch(stepPackageDataProvider);
 
+    final RoundedRectangleBorder roundedRectangleBorder = RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(4),
+    );
+
     Expanded getTaskList() {
       return Expanded(
         child: taskPackageData.when(
@@ -35,9 +39,7 @@ class TaskPage extends ConsumerWidget {
                   },
                   style: ElevatedButton.styleFrom(
                     alignment: Alignment.centerLeft,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    shape: roundedRectangleBorder,
                     padding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 32,
@@ -106,6 +108,7 @@ class TaskPage extends ConsumerWidget {
 
       return Card(
         margin: const EdgeInsets.all(8),
+        shape: roundedRectangleBorder,
         child: CheckboxListTile(
           onChanged: (bool? changedValue) {
             stepPackageDataNotifier.setDone(
@@ -113,6 +116,7 @@ class TaskPage extends ConsumerWidget {
               changedValue,
             );
           },
+          shape: roundedRectangleBorder,
           selected: stepPackage.done,
           value: stepPackage.done,
           title: Text(
@@ -129,41 +133,6 @@ class TaskPage extends ConsumerWidget {
       );
     }
 
-    Container getTaskStepControl() {
-      if (taskPackageDataNotifier.selectedTask != -1) {
-        return Container(
-          margin: const EdgeInsets.symmetric(
-            vertical: 16,
-          ),
-          padding: const EdgeInsets.all(8),
-          //color: Colors.black12,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                onPressed: () {},
-                child: Row(
-                  children: const [
-                    Icon(Icons.commit),
-                    SizedBox(width: 4),
-                    Text(
-                      "Commit",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 1,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-      return Container();
-    }
-
     Expanded getTaskStep() {
       return Expanded(
         child: ListView(
@@ -171,16 +140,45 @@ class TaskPage extends ConsumerWidget {
             for (int stepIndex = 0; stepIndex < stepPackageData.length; stepIndex++) ...[
               getStepCard(stepIndex)
             ],
-            getTaskStepControl(),
           ],
         ),
+      );
+    }
+
+    Row getControlButtons() {
+      return Row(
+        children: [
+          CCElevatedButtonWithIcon(
+            iconData: Icons.save,
+            buttonText: "Save",
+            onPressed: () {},
+          ),
+          const SizedBox(width: 8),
+          CCElevatedButtonWithIcon(
+            iconData: Icons.commit,
+            buttonText: "Commit",
+            onPressed: () {},
+          ),
+        ],
       );
     }
 
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
-        title: Text(taskPageArguments.missionPackageName),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              taskPageArguments.missionPackageName,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+              ),
+            ),
+            getControlButtons(),
+          ],
+        ),
       ),
       body: Row(
         children: [

@@ -1,13 +1,12 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:flutter/material.dart";
+import "package:xpa/view/index.dart";
 
 class HomePageAppBar extends ConsumerWidget implements PreferredSizeWidget {
   HomePageAppBar({super.key});
 
   final ButtonStyle buttonStyle = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.symmetric(
-      horizontal: 48,
-    ),
+    fixedSize: const Size.fromWidth(160),
   );
 
   final TextStyle buttonTextStyle = const TextStyle(
@@ -46,52 +45,22 @@ class HomePageAppBar extends ConsumerWidget implements PreferredSizeWidget {
       );
     }
 
-    ElevatedButton getLogoutButton() {
-      return ElevatedButton(
-        onPressed: () {},
-        style: buttonStyle,
-        child: Row(
-          children: [
-            const Icon(Icons.logout),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              "LOGOUT",
-              style: buttonTextStyle,
-            ),
-          ],
-        ),
-      );
-    }
-
-    ElevatedButton getSettingButton() {
-      return ElevatedButton(
-        onPressed: () {},
-        style: buttonStyle,
-        child: Row(
-          children: [
-            const Icon(Icons.settings),
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              "SETTINGS",
-              style: buttonTextStyle,
-            ),
-          ],
-        ),
-      );
-    }
-
     Row getButtons() {
       return Row(
         children: [
-          getSettingButton(),
-          const SizedBox(
-            width: 16,
+          CCElevatedButtonWithIcon(
+            iconData: Icons.settings,
+            buttonText: "Settings",
+            onPressed: () {},
           ),
-          getLogoutButton(),
+          const SizedBox(
+            width: 8,
+          ),
+          CCElevatedButtonWithIcon(
+            iconData: Icons.logout,
+            buttonText: "Logout",
+            onPressed: () {},
+          ),
         ],
       );
     }

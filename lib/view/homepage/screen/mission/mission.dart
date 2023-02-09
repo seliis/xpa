@@ -38,7 +38,9 @@ class Mission extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(missionPackage.desc),
-            ElevatedButton(
+            CCElevatedButtonWithIcon(
+              iconData: Icons.arrow_right_alt,
+              buttonText: "Continue",
               onPressed: () {
                 RouteGraph.moveTo(
                   context,
@@ -48,20 +50,6 @@ class Mission extends ConsumerWidget {
                   ),
                 );
               },
-              child: Row(
-                children: const [
-                  Icon(Icons.arrow_right_alt),
-                  SizedBox(width: 4),
-                  Text(
-                    "CONTINUE",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      letterSpacing: 1,
-                      fontSize: 10,
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),
@@ -86,24 +74,12 @@ class Mission extends ConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              ElevatedButton(
+              CCElevatedButtonWithIcon(
+                iconData: Icons.refresh,
+                buttonText: "Refresh",
                 onPressed: () {
                   missionPackageDataNotifier.refreshMissionPackageData();
                 },
-                child: Row(
-                  children: const [
-                    Icon(Icons.refresh),
-                    SizedBox(width: 4),
-                    Text(
-                      "REFRESH",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        letterSpacing: 1,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
-                ),
               ),
               Text(missionPackageDataNotifier.getAssignedQuantityStateMsg()),
             ],
