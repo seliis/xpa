@@ -20,8 +20,34 @@ class Mission extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(missionPackage.name),
+                Text(
+                  missionPackage.name,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w300,
+                    color: Colors.pink,
+                    fontSize: 24,
+                  ),
+                ),
+                Text(
+                  "[${missionPackage.info.updatedAt}] Updated By ${missionPackage.info.updatedBy}",
+                  style: const TextStyle(
+                    fontFamily: FontName.jetBrainsMono,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
+                Text(
+                  "[${missionPackage.info.grantedAt}] Granted By ${missionPackage.info.grantedBy}",
+                  style: const TextStyle(
+                    fontFamily: FontName.jetBrainsMono,
+                    fontWeight: FontWeight.w100,
+                    color: Colors.grey,
+                    fontSize: 12,
+                  ),
+                ),
               ],
             ),
             const Text("0%"),
@@ -42,7 +68,12 @@ class Mission extends ConsumerWidget {
                 alignment: Alignment.centerLeft,
                 width: MediaQuery.of(context).size.width * 0.50,
                 child: RichText(
-                  text: TextSpan(text: missionPackage.desc),
+                  text: TextSpan(
+                    text: missionPackage.desc,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w100,
+                    ),
+                  ),
                   textAlign: TextAlign.justify,
                 ),
               ),
@@ -65,9 +96,9 @@ class Mission extends ConsumerWidget {
       );
     }
 
-    ExpansionPanelRadio getExpansionPanelRadio(MissionPackage missionPackage) {
+    ExpansionPanelRadio getExpansionPanelRadio(MissionPackage missionPackage, int index) {
       return ExpansionPanelRadio(
-        value: missionPackage.id,
+        value: index,
         canTapOnHeader: false,
         headerBuilder: (BuildContext context, bool isExpanded) {
           return getHeader(missionPackage);
@@ -97,10 +128,14 @@ class Mission extends ConsumerWidget {
         const Divider(),
         Expanded(
           child: missionPackageData.when(
-            data: (dataList) {
+            data: (List<MissionPackage> dataList) {
               return SingleChildScrollView(
                 child: ExpansionPanelList.radio(
-                  children: dataList.map(getExpansionPanelRadio).toList(),
+                  children: [
+                    for (int index = 0; index < dataList.length; index++) ...[
+                      getExpansionPanelRadio(dataList[index], index),
+                    ],
+                  ],
                 ),
               );
             },

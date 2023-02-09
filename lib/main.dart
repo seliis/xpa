@@ -11,7 +11,7 @@ void main() {
         theme: ThemeData(
           useMaterial3: true,
           brightness: Brightness.dark,
-          fontFamily: "NanumSquareNeo",
+          //fontFamily: "NanumSquareNeo",
         ),
         initialRoute: HomePage.routeName,
         onGenerateRoute: RouteGraph.onGenerateRoute,
