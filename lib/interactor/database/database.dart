@@ -11,19 +11,19 @@ class Database {
     return _testBox ?? await Hive.openBox("test");
   }
 
-  static void write(Box box, dynamic key, dynamic value) {
-    box.put(key, value);
+  static void write(Box box, dynamic key, dynamic value) async {
+    await box.put(key, value);
   }
 
   static dynamic read(Box box, dynamic key) {
     return box.get(key);
   }
 
-  static void delete(Box box, dynamic key) {
-    box.delete(key);
+  static void delete(Box box, dynamic key) async {
+    await box.delete(key);
   }
 
-  static void clear(Box box, dynamic key) {
-    box.clear();
+  static Future<int> clear(Box box, dynamic key) async {
+    return await box.clear();
   }
 }
