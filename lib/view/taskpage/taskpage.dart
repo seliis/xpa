@@ -46,7 +46,26 @@ class TaskPage extends ConsumerWidget {
                     ),
                     side: taskPackageDataNotifier.selectedTask == index ? const BorderSide(color: Colors.pink) : null,
                   ),
-                  child: Text(data[index].name),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        data[index].name,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Text(
+                        data[index].desc,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
@@ -71,40 +90,6 @@ class TaskPage extends ConsumerWidget {
 
     Card getStepCard(int stepIndex) {
       final StepPackage stepPackage = stepPackageData[stepIndex];
-
-      Widget getSecondary() {
-        switch (stepPackage.overlapCheckLevel) {
-          case 0:
-            return const SizedBox.shrink();
-          case 1:
-            return const Icon(Icons.star_border_purple500);
-          case 2:
-            return const Icon(Icons.hotel_class_outlined);
-          default:
-            return const SizedBox.shrink();
-        }
-      }
-
-      // Think: Can be give color tape on left border only with below code.
-      // Card(
-      //   child: ClipPath(
-      //     child: Container(
-      //       padding: EdgeInsets.all(16),
-      //       decoration: BoxDecoration(
-      //         border: Border(
-      //           left: BorderSide(color: Colors.greenAccent, width: 5),
-      //         ),
-      //       ),
-      //       child: Text(
-      //         'Product Name',
-      //         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      //       ),
-      //     ),
-      //     clipper: ShapeBorderClipper(
-      //         shape: RoundedRectangleBorder(
-      //             borderRadius: BorderRadius.circular(3))),
-      //   ),
-      // );
 
       return Card(
         margin: const EdgeInsets.all(8),
@@ -134,7 +119,10 @@ class TaskPage extends ConsumerWidget {
             ),
             textAlign: TextAlign.justify,
           ),
-          secondary: getSecondary(),
+          secondary: const Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.amber,
+          ),
           isThreeLine: true,
           dense: true,
           controlAffinity: ListTileControlAffinity.leading,

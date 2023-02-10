@@ -1,22 +1,22 @@
 class TaskPackage {
   const TaskPackage({
-    required this.id,
     required this.name,
+    required this.desc,
     required this.step,
   });
 
-  final int id;
   final String name;
+  final String desc;
   final List<StepPackage> step;
 
   factory TaskPackage.fromJson(Map<String, dynamic> data) {
     final List<Map<String, dynamic>> typedStepData = List<Map<String, dynamic>>.from(
-      data["step"],
+      data["task_package_step"],
     );
 
     return TaskPackage(
-      id: data["id"] as int,
-      name: data["name"] as String,
+      name: data["task_package_name"] as String,
+      desc: data["task_package_desc"] as String,
       step: typedStepData.map(
         (Map<String, dynamic> eachStep) {
           return StepPackage.fromJson(eachStep);
@@ -28,42 +28,32 @@ class TaskPackage {
 
 class StepPackage {
   const StepPackage({
-    required this.id,
     required this.name,
     required this.desc,
     required this.done,
-    required this.overlapCheckLevel,
   });
 
-  final int id;
   final String name;
   final String desc;
   final bool done;
-  final int overlapCheckLevel;
 
   factory StepPackage.fromJson(Map<String, dynamic> data) {
     return StepPackage(
-      id: data["id"] as int,
-      name: data["name"] as String,
-      desc: data["desc"] as String,
-      done: data["done"] as bool,
-      overlapCheckLevel: data["overlap_check_level"] as int,
+      name: data["step_package_name"] as String,
+      desc: data["step_package_desc"] as String,
+      done: data["step_package_done"] as bool,
     );
   }
 
   StepPackage copyWith({
-    int? id,
     String? name,
     String? desc,
     bool? done,
-    int? overlapCheckLevel,
   }) {
     return StepPackage(
-      id: id ?? this.id,
       name: name ?? this.name,
       desc: desc ?? this.desc,
       done: done ?? this.done,
-      overlapCheckLevel: overlapCheckLevel ?? this.overlapCheckLevel,
     );
   }
 }

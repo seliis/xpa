@@ -1,24 +1,13 @@
 [
   {
-    "mission_package_uuid": "dummy_mission_a",
-    "mission_package_name": "Lorem Ipsum",
-    "mission_package_desc": "Quisque ut molestie lorem. Maecenas convallis rhoncus neque, ac ultricies ipsum auctor luctus. Curabitur mollis ut lacus et aliquam. Nulla non ligula vulputate, blandit nunc egestas, aliquam mi. Morbi faucibus dignissim hendrerit. Vivamus vehicula urna eget dolor mollis sollicitudin.",
+    "mission_package_uuid": "mission_package_uuid",
+    "mission_package_name": "mission_package_name",
+    "mission_package_desc": "mission_package_desc",
     "mission_package_info": {
-      "updated_by": "Rosemary Bernard",
-      "updated_at": "2022-09-26 09:38:41",
-      "granted_by": "Thomas Collins",
-      "granted_at": "2023-02-08 14:12:39"
-    }
-  },
-  {
-    "mission_package_uuid": "dummy_mission_b",
-    "mission_package_name": "Fusce Diam Tellus",
-    "mission_package_desc": "Curabitur sed lacus quis lacus vulputate pellentesque. Maecenas convallis maximus malesuada. Donec neque dolor, dignissim quis purus nec, semper dapibus nibh. Cras sit amet mi elementum, ornare nunc sit amet, accumsan eros. Phasellus at efficitur massa.",
-    "mission_package_info": {
-      "updated_by": "Alex Suarez",
-      "updated_at": "2022-05-08 16:34:52",
-      "granted_by": "Thomas Collins",
-      "granted_at": "2023-02-09 10:46:28"
+      "updated_by": "updated_by",
+      "updated_at": "updated_at",
+      "granted_by": "granted_by",
+      "granted_at": "granted_at"
     }
   }
 ]

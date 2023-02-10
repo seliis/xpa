@@ -21,7 +21,7 @@ class AsyncTaskPackageNotifier extends AsyncNotifier<List<TaskPackage>> {
 
   void _setInitState(Map<String, dynamic> firstJsonData) {
     final List<Map<String, dynamic>> stepData = List<Map<String, dynamic>>.from(
-      firstJsonData["step"],
+      firstJsonData["task_package_step"],
     );
     final List<StepPackage> stepPackageList = stepData.map(
       (Map<String, dynamic> eachStep) {
@@ -51,25 +51,19 @@ final asyncTaskPackageDataProvider = AsyncNotifierProvider<AsyncTaskPackageNotif
 class StepPackageNotifier extends StateNotifier<List<StepPackage>> {
   StepPackageNotifier() : super(<StepPackage>[]);
 
-  // void changeState(List<Map<String, dynamic>> typedStepData) {
-  //   state = typedStepData.map((Map<String, dynamic> eachStep) {
-  //     return StepPackage.fromJson(eachStep);
-  //   }).toList();
-  // }
-
   void changeState(List<StepPackage> stepPackageList) {
     state = stepPackageList;
   }
 
-  void setDone(int index, bool? changedValue) {
+  void setDone(int targetIndex, bool? changedValue) {
     state = [
-      for (final StepPackage step in state) ...[
-        if (step.id == index) ...[
-          step.copyWith(
+      for (int index = 0; index < state.length; index++) ...[
+        if (index == targetIndex) ...[
+          state[index].copyWith(
             done: changedValue,
           ),
         ] else ...[
-          step,
+          state[index],
         ],
       ],
     ];
