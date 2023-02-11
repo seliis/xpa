@@ -5,7 +5,7 @@ import "package:flutter_test/flutter_test.dart";
 import "package:xpa/interactor/index.dart";
 
 void main() async {
-  Hive.init("test/database/hive/");
+  Hive.init("./database/");
 
   test("Write and Read", () async {
     final Box<dynamic> testBox = await Database.testBox;

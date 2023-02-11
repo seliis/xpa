@@ -1,5 +1,8 @@
+.flutter-plugins-dependencies
+.flutter-plugins
 pubspec.lock
 .dart_tool
+database
 windows
 macos
 build
