@@ -5,10 +5,10 @@ class Database {
   const Database._singleInstance();
   factory Database() => _instance;
 
-  static final Box<dynamic>? _testBox;
+  static Box<dynamic>? _testBox;
 
   static Future<Box<dynamic>> get testBox async {
-    return _testBox ?? await Hive.openBox("test");
+    return _testBox ??= await Hive.openBox("test");
   }
 
   static void write(Box box, dynamic key, dynamic value) async {
