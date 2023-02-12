@@ -1,8 +1,8 @@
-import "package:flutter/services.dart";
+import "package:xpa/interactor/index.dart";
 
 class InteractorOfMission {
   static Future<String> requestDummyMissionData() async {
     await Future.delayed(const Duration(seconds: 1)); // have to remove before release
-    return await rootBundle.loadString("dummy/mission.json");
+    return await Database.read(await Database.testBox, "testMission");
   }
 }

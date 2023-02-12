@@ -162,31 +162,59 @@ class TaskPage extends ConsumerWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0.0,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              taskPageArguments.missionPackageName,
-              style: const TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 18,
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog(
+          context: context,
+          builder: (BuildContext dialogContext) {
+            return AlertDialog(
+              title: const Text("Do you want exit?"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(dialogContext, false);
+                  },
+                  child: const Text("No"),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(dialogContext, true);
+                  },
+                  child: const Text("Yes"),
+                ),
+              ],
+            );
+          },
+        ).then(
+          (dynamic result) => result,
+        );
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          scrolledUnderElevation: 0.0,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                taskPageArguments.missionPackageName,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w700,
+                  fontSize: 18,
+                ),
               ),
-            ),
-            getControlButtons(),
+              getControlButtons(),
+            ],
+          ),
+        ),
+        body: Row(
+          children: [
+            getTaskList(),
+            if (taskPackageDataNotifier.selectedTask != -1) ...[
+              const VerticalDivider(),
+              getTaskStep(),
+            ],
           ],
         ),
-      ),
-      body: Row(
-        children: [
-          getTaskList(),
-          if (taskPackageDataNotifier.selectedTask != -1) ...[
-            const VerticalDivider(),
-            getTaskStep(),
-          ],
-        ],
       ),
     );
   }
