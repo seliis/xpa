@@ -186,8 +186,14 @@ class TaskPage extends ConsumerWidget {
             context: context,
             builder: (BuildContext dialogContext) {
               return AlertDialog(
-                title: const Text("Do you want exit without saving?"),
-                content: const Text("All changes will be discard"),
+                title: Row(
+                  children: const [
+                    Icon(Icons.warning_amber_sharp),
+                    SizedBox(width: 16),
+                    Text("Warning"),
+                  ],
+                ),
+                content: const Text("Packages are not saved, all changes will discard. Do you want continue to exit?"),
                 actions: [
                   TextButton(
                     onPressed: () {
