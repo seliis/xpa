@@ -1,5 +1,5 @@
 class TaskPackage {
-  const TaskPackage({
+  TaskPackage({
     required this.name,
     required this.desc,
     required this.step,
@@ -7,7 +7,7 @@ class TaskPackage {
 
   final String name;
   final String desc;
-  final List<StepPackage> step;
+  List<StepPackage> step;
 
   factory TaskPackage.fromJson(Map<String, dynamic> data) {
     final List<Map<String, dynamic>> typedStepData = List<Map<String, dynamic>>.from(

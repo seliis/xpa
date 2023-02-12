@@ -55,7 +55,7 @@ class Mission extends ConsumerWidget {
               style: TextStyle(
                 fontFamily: FontName.jetBrainsMono,
                 fontWeight: FontWeight.w100,
-                fontSize: 24,
+                fontSize: 18,
               ),
             ),
           ],

@@ -9,16 +9,5 @@
         "step_package_done": false
       }
     ]
-  },
-  {
-    "task_package_name": "task_package_name",
-    "task_package_desc": "task_package_desc",
-    "task_package_step": [
-      {
-        "step_package_name": "step_package_name",
-        "step_package_desc": "step_package_desc",
-        "step_package_done": false
-      }
-    ]
   }
 ]

@@ -148,7 +148,9 @@ class TaskPage extends ConsumerWidget {
           CCElevatedButtonWithIcon(
             iconData: Icons.save,
             buttonText: "Save",
-            onPressed: () {},
+            onPressed: () {
+              taskPackageDataNotifier.saveCurrentTaskStatus();
+            },
           ),
           const SizedBox(width: 8),
           CCElevatedButtonWithIcon(
