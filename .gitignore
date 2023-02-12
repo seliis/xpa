@@ -2,6 +2,7 @@
 .flutter-plugins
 pubspec.lock
 .dart_tool
+.DS_Store
 database
 windows
 macos
