@@ -148,8 +148,23 @@ class TaskPage extends ConsumerWidget {
           CCElevatedButtonWithIcon(
             iconData: Icons.save,
             buttonText: "Save",
-            onPressed: () {
-              taskPackageDataNotifier.saveCurrentTaskStatus();
+            onPressed: () async {
+              void showSnackBar(String message, MaterialColor materialColor) {
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(message),
+                      backgroundColor: materialColor,
+                    ),
+                  );
+                }
+              }
+
+              if (await taskPackageDataNotifier.saveCurrentTaskStatus()) {
+                showSnackBar("Task Package Has Been Saved", Colors.lightGreen);
+              } else {
+                showSnackBar("Task Package Saving Error Occured", Colors.red);
+              }
             },
           ),
           const SizedBox(width: 8),
@@ -164,30 +179,35 @@ class TaskPage extends ConsumerWidget {
 
     return WillPopScope(
       onWillPop: () async {
-        return await showDialog(
-          context: context,
-          builder: (BuildContext dialogContext) {
-            return AlertDialog(
-              title: const Text("Do you want exit?"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(dialogContext, false);
-                  },
-                  child: const Text("No"),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(dialogContext, true);
-                  },
-                  child: const Text("Yes"),
-                ),
-              ],
-            );
-          },
-        ).then(
-          (dynamic result) => result,
-        );
+        if (AsyncTaskPackageNotifier.taskPackageSaved) {
+          return true;
+        } else {
+          return await showDialog(
+            context: context,
+            builder: (BuildContext dialogContext) {
+              return AlertDialog(
+                title: const Text("Do you want exit without saving?"),
+                content: const Text("All changes will be discard"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext, false);
+                    },
+                    child: const Text("No"),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(dialogContext, true);
+                    },
+                    child: const Text("Yes"),
+                  ),
+                ],
+              );
+            },
+          ).then(
+            (dynamic result) => result,
+          );
+        }
       },
       child: Scaffold(
         appBar: AppBar(

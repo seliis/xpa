@@ -1,6 +1,7 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:hive_flutter/hive_flutter.dart";
 import "package:xpa/interactor/index.dart";
+import "package:xpa/presenter/index.dart";
 import "package:flutter/material.dart";
 import "package:flutter/services.dart";
 import "package:xpa/router/index.dart";
@@ -12,6 +13,9 @@ void main() async {
 
   runApp(
     ProviderScope(
+      observers: [
+        StepPackageObserver(),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

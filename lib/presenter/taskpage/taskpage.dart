@@ -18,6 +18,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
   }
 
   int selectedTask = -1;
+  static bool taskPackageSaved = false;
 
   void _setInitState(Map<String, dynamic> firstJsonData) {
     final List<Map<String, dynamic>> stepData = List<Map<String, dynamic>>.from(
@@ -29,6 +30,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
       },
     ).toList();
     setStepPackageProviderState(stepPackageList);
+    taskPackageSaved = true;
     selectedTask = 0;
   }
 
@@ -63,13 +65,15 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
     notifier.changeState(stepPackageList);
   }
 
-  void saveCurrentTaskStatus() {
-    state.whenData(
+  Future<bool> saveCurrentTaskStatus() async {
+    return state.whenData(
       (List<TaskPackage> taskPackageList) async {
         taskPackageList[selectedTask].step = ref.read(stepPackageDataProvider);
         InteractorOfTask.postDummyTaskData(getSerializedState());
+        taskPackageSaved = true;
+        return true;
       },
-    );
+    ).value!;
   }
 
   @override
@@ -83,6 +87,22 @@ final asyncTaskPackageDataProvider = AsyncNotifierProvider.autoDispose<AsyncTask
     return AsyncTaskPackageNotifier();
   },
 );
+
+class StepPackageObserver extends ProviderObserver {
+  @override
+  void didUpdateProvider(
+    ProviderBase provider,
+    Object? previousValue,
+    Object? newValue,
+    ProviderContainer container,
+  ) {
+    if (provider.name == "StepPackage") {
+      if (AsyncTaskPackageNotifier.taskPackageSaved) {
+        AsyncTaskPackageNotifier.taskPackageSaved = false;
+      }
+    }
+  }
+}
 
 class StepPackageNotifier extends StateNotifier<List<StepPackage>> {
   StepPackageNotifier() : super(<StepPackage>[]);
@@ -110,4 +130,5 @@ final stepPackageDataProvider = StateNotifierProvider<StepPackageNotifier, List<
   (ref) {
     return StepPackageNotifier();
   },
+  name: "StepPackage",
 );
