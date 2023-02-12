@@ -1,8 +1,12 @@
-import "package:flutter/services.dart";
+import "package:xpa/interactor/index.dart";
 
 class InteractorOfTask {
   static Future<String> requestDummyTaskData() async {
     await Future.delayed(const Duration(seconds: 1)); // have to remove before release
-    return await rootBundle.loadString("dummy/task.json");
+    return Database.read(await Database.testBox, "testTask");
+  }
+
+  static void postDummyTaskData(String contents) async {
+    Database.write(await Database.testBox, "testTask", contents);
   }
 }

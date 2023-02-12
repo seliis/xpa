@@ -32,7 +32,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
     selectedTask = 0;
   }
 
-  AsyncValue<String> getSerializedState() {
+  String getSerializedState() {
     return state.whenData(
       (List<TaskPackage> taskPackageList) {
         return jsonEncode(
@@ -55,7 +55,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
           ).toList(),
         );
       },
-    );
+    ).value!;
   }
 
   void setStepPackageProviderState(List<StepPackage> stepPackageList) {
@@ -63,11 +63,11 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
     notifier.changeState(stepPackageList);
   }
 
-  void saveCurrentTaskStatus() async {
+  void saveCurrentTaskStatus() {
     state.whenData(
-      (List<TaskPackage> taskPackageList) {
+      (List<TaskPackage> taskPackageList) async {
         taskPackageList[selectedTask].step = ref.read(stepPackageDataProvider);
-        print(getSerializedState());
+        InteractorOfTask.postDummyTaskData(getSerializedState());
       },
     );
   }
