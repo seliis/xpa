@@ -3,6 +3,8 @@ import "package:xpa/interactor/index.dart";
 import "package:xpa/entity/index.dart";
 import "dart:convert";
 
+final selectedTaskPackageIndexProvider = StateProvider<int>((ref) => -1);
+
 class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage>> {
   Future<List<TaskPackage>> _fetchData() async {
     final String response = await InteractorOfTask.requestDummyTaskData();
@@ -17,7 +19,6 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
     ).toList();
   }
 
-  int selectedTask = -1;
   static bool taskPackageSaved = false;
 
   void _setInitState(Map<String, dynamic> firstJsonData) {
@@ -29,9 +30,9 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
         return StepPackage.fromJson(eachStep);
       },
     ).toList();
+    ref.read(selectedTaskPackageIndexProvider.notifier).state = 0;
     setStepPackageProviderState(stepPackageList);
     taskPackageSaved = true;
-    selectedTask = 0;
   }
 
   String getSerializedState() {
@@ -62,7 +63,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
   }
 
   void setStepPackageProviderState(List<StepPackage> stepPackageList) {
-    final notifier = ref.watch(stepPackageDataProvider.notifier);
+    final notifier = ref.watch(stepPackageListProvider.notifier);
     notifier.changeState(stepPackageList);
   }
 
@@ -87,7 +88,8 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
   Future<bool> saveCurrentTaskStatus() async {
     return state.whenData(
       (List<TaskPackage> taskPackageList) async {
-        taskPackageList[selectedTask].step = ref.read(stepPackageDataProvider);
+        final selectedTaskIndex = ref.read(selectedTaskPackageIndexProvider);
+        taskPackageList[selectedTaskIndex].step = ref.read(stepPackageListProvider);
         InteractorOfTask.postDummyTaskData(getSerializedState());
         taskPackageSaved = true;
         return true;
@@ -101,7 +103,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
   }
 }
 
-final asyncTaskPackageDataProvider = AsyncNotifierProvider.autoDispose<AsyncTaskPackageNotifier, List<TaskPackage>>(
+final taskPackageListProvider = AsyncNotifierProvider.autoDispose<AsyncTaskPackageNotifier, List<TaskPackage>>(
   () {
     return AsyncTaskPackageNotifier();
   },
@@ -145,7 +147,7 @@ class StepPackageNotifier extends StateNotifier<List<StepPackage>> {
   }
 }
 
-final stepPackageDataProvider = StateNotifierProvider<StepPackageNotifier, List<StepPackage>>(
+final stepPackageListProvider = StateNotifierProvider<StepPackageNotifier, List<StepPackage>>(
   (ref) {
     return StepPackageNotifier();
   },
