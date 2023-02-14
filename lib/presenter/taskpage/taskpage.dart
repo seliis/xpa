@@ -43,6 +43,7 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
               return <String, dynamic>{
                 "task_package_name": taskPackage.name,
                 "task_package_desc": taskPackage.desc,
+                "task_package_done": taskPackage.done,
                 "task_package_step": taskPackage.step.map(
                   (StepPackage stepPackage) {
                     return <String, dynamic>{
@@ -63,6 +64,24 @@ class AsyncTaskPackageNotifier extends AutoDisposeAsyncNotifier<List<TaskPackage
   void setStepPackageProviderState(List<StepPackage> stepPackageList) {
     final notifier = ref.watch(stepPackageDataProvider.notifier);
     notifier.changeState(stepPackageList);
+  }
+
+  void setDone(int targetIndex, bool? changedValue) {
+    state = state.whenData(
+      (List<TaskPackage> taskPackageList) {
+        return taskPackageList = [
+          for (int index = 0; index < taskPackageList.length; index++) ...[
+            if (index == targetIndex) ...[
+              taskPackageList[index].copyWith(
+                done: changedValue,
+              ),
+            ] else ...[
+              taskPackageList[index],
+            ],
+          ],
+        ];
+      },
+    );
   }
 
   Future<bool> saveCurrentTaskStatus() async {

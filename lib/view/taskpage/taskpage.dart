@@ -27,15 +27,16 @@ class TaskPage extends ConsumerWidget {
     Expanded getTaskList() {
       return Expanded(
         child: taskPackageData.when(
-          data: (List<TaskPackage> data) {
+          data: (List<TaskPackage> taskPackageList) {
             return ListView.separated(
               padding: const EdgeInsets.all(8),
-              itemCount: data.length,
-              itemBuilder: (BuildContext context, int index) {
+              itemCount: taskPackageList.length,
+              itemBuilder: (BuildContext context, int taskPackageIndex) {
+                final TaskPackage taskPackage = taskPackageList[taskPackageIndex];
                 return ElevatedButton(
                   onPressed: () {
-                    taskPackageDataNotifier.setStepPackageProviderState(data[index].step);
-                    taskPackageDataNotifier.selectedTask = index;
+                    taskPackageDataNotifier.setStepPackageProviderState(taskPackage.step);
+                    taskPackageDataNotifier.selectedTask = taskPackageIndex;
                   },
                   style: ElevatedButton.styleFrom(
                     alignment: Alignment.centerLeft,
@@ -44,25 +45,51 @@ class TaskPage extends ConsumerWidget {
                       horizontal: 16,
                       vertical: 32,
                     ),
-                    side: taskPackageDataNotifier.selectedTask == index ? const BorderSide(color: Colors.pink) : null,
+                    side: taskPackageDataNotifier.selectedTask == taskPackageIndex ? const BorderSide(color: Colors.pink) : null,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        data[index].name,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16,
-                        ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.star_border,
+                            color: Colors.pink,
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                taskPackage.name,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
+                              Text(
+                                taskPackage.desc,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      Text(
-                        data[index].desc,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                          color: Colors.white,
+                      ElevatedButton(
+                        onPressed: () {
+                          taskPackageDataNotifier.setDone(taskPackageIndex, !taskPackage.done);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: taskPackage.done ? Colors.lightGreen : Colors.grey,
+                          foregroundColor: taskPackage.done ? Colors.black : Colors.grey.shade600,
                         ),
+                        child: const Text("Complete"),
                       ),
                     ],
                   ),
@@ -120,8 +147,8 @@ class TaskPage extends ConsumerWidget {
             textAlign: TextAlign.justify,
           ),
           secondary: const Icon(
-            Icons.warning_amber_rounded,
-            color: Colors.amber,
+            Icons.warning_amber,
+            color: Colors.orange,
           ),
           isThreeLine: true,
           dense: true,

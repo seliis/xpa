@@ -7,6 +7,7 @@ class InteractorOfTask {
   }
 
   static void postDummyTaskData(String contents) async {
+    print(contents);
     Database.write(await Database.testBox, "testTask", contents);
   }
 }

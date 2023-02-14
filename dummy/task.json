@@ -2,6 +2,7 @@
   {
     "task_package_name": "task_package_name_a",
     "task_package_desc": "task_package_desc_a",
+    "task_package_done": false,
     "task_package_step": [
       {
         "step_package_name": "step_package_name_aa",
@@ -23,6 +24,7 @@
   {
     "task_package_name": "task_package_name_b",
     "task_package_desc": "task_package_desc_b",
+    "task_package_done": false,
     "task_package_step": [
       {
         "step_package_name": "step_package_name_aa",

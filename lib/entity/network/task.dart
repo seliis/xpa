@@ -3,10 +3,12 @@ class TaskPackage {
     required this.name,
     required this.desc,
     required this.step,
+    required this.done,
   });
 
   final String name;
   final String desc;
+  final bool done;
   List<StepPackage> step;
 
   factory TaskPackage.fromJson(Map<String, dynamic> data) {
@@ -17,11 +19,26 @@ class TaskPackage {
     return TaskPackage(
       name: data["task_package_name"] as String,
       desc: data["task_package_desc"] as String,
+      done: data["task_package_done"] as bool,
       step: typedStepData.map(
         (Map<String, dynamic> eachStep) {
           return StepPackage.fromJson(eachStep);
         },
       ).toList(),
+    );
+  }
+
+  TaskPackage copyWith({
+    String? name,
+    String? desc,
+    bool? done,
+    List<StepPackage>? step,
+  }) {
+    return TaskPackage(
+      name: name ?? this.name,
+      desc: desc ?? this.desc,
+      done: done ?? this.done,
+      step: step ?? this.step,
     );
   }
 }
