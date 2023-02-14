@@ -186,12 +186,12 @@ class TaskPage extends ConsumerWidget {
             context: context,
             builder: (BuildContext dialogContext) {
               return AlertDialog(
-                title: Row(
-                  children: const [
-                    Icon(Icons.warning_amber_sharp),
-                    SizedBox(width: 16),
-                    Text("Warning"),
-                  ],
+                title: const Text(
+                  "Warning",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w100,
+                    color: Colors.amber,
+                  ),
                 ),
                 content: const Text("Packages are not saved, all changes will discard. Do you want continue to exit?"),
                 actions: [
